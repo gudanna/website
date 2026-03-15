@@ -156,10 +156,7 @@ body::after {
   position: absolute; inset: 0;
   overflow-y: auto; overflow-x: hidden;
   padding: 52px var(--pad) 110px; z-index: 1;
-  scrollbar-width: thin; scrollbar-color: rgba(128,128,128,0.16) transparent;
 }
-.f-scroll::-webkit-scrollbar { width: 3px; }
-.f-scroll::-webkit-scrollbar-thumb { background: rgba(128,128,128,0.2); border-radius: 2px; }
 
 /* ════ Label ════ */
 .f-label {
@@ -403,3 +400,54 @@ body::after {
 
 
 
+
+/* ════ Global Scrollbar ════ */
+
+/* Hide native scrollbar from folders */
+.f-scroll {
+  scrollbar-width: none;
+}
+.f-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Track */
+.global-scrollbar {
+  position: fixed;
+  right: 12px;
+  top: 12vh;
+  bottom: 56px;
+  width: 2px;
+  z-index: 200;
+  background: rgba(100,80,60,0.08);
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  cursor: pointer;
+}
+.global-scrollbar.visible {
+  opacity: 1;
+}
+
+/* Thumb */
+.global-scrollbar-thumb {
+  position: absolute;
+  left: 0;
+  width: 2px;
+  min-height: 28px;
+  border-radius: 2px;
+  background: rgba(100,80,60,0.38);
+  transition: background 0.2s, width 0.15s, left 0.15s;
+  top: 0;
+  will-change: top, height;
+}
+.global-scrollbar:hover .global-scrollbar-thumb,
+.global-scrollbar-thumb.dragging {
+  background: rgba(100,80,60,0.68);
+  width: 4px;
+  left: -1px;
+}
+
+@media (max-width: 680px) {
+  .global-scrollbar { right: 5px; }
+}
