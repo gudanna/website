@@ -33,7 +33,8 @@ a, button, .f-tab, .proj-card, .dot-item, .chip, .tool-tags span {
   --noise-card: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)' opacity='0.14'/%3E%3C/svg%3E");
 }
 
-html, body { height: 100%; overflow: hidden; font-family: var(--font-sans); }
+html, body { height: 100%; font-family: var(--font-sans); }
+body { overflow-y: scroll; overflow-x: hidden; }
 
 /* Paper bg */
 body {
@@ -391,124 +392,21 @@ body::after {
 }
 
 
-/* ════ Left Navigation Slider ════ */
+/* ════ Page-level scroll bridge ════ */
 
-.nav-slider {
-  position: fixed;
-  left: 28px;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 200;
-  display: flex;
-  align-items: center;
+/* All folders: fixed layout, content clipped by default */
+.f-body {
+  overflow: hidden;
 }
 
-.nav-slider-track {
+/* The front folder expands to show all content (height driven by JS proxy) */
+.folder[data-pos="front"] .f-body {
+  overflow: visible;
+}
+
+/* f-scroll in front folder: not scrollable itself, flows naturally */
+.folder[data-pos="front"] .f-scroll {
   position: relative;
-  height: 180px;
-  display: flex;
-  align-items: center;
-  cursor: grab;
-  user-select: none;
-}
-.nav-slider-track:active { cursor: grabbing; }
-
-/* Vertical line */
-.nav-slider-line {
-  position: absolute;
-  left: 50%;
-  top: 0; bottom: 0;
-  width: 1px;
-  background: rgba(100,80,60,0.18);
-  transform: translateX(-50%);
-  border-radius: 1px;
-}
-
-/* Dots at each section position */
-.nav-slider-dots {
-  position: absolute;
-  left: 50%;
-  top: 0; bottom: 0;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  width: 0;
-}
-
-.nav-dot {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: rgba(100,80,60,0.28);
-  transition: background 0.25s, transform 0.25s;
-  flex-shrink: 0;
-}
-.nav-dot.active {
-  background: rgba(100,80,60,0.72);
-  transform: scale(1.5);
-}
-
-/* Draggable thumb */
-.nav-slider-thumb {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: rgba(100,80,60,0.65);
-  border: 1.5px solid rgba(100,80,60,0.35);
-  box-shadow: 0 1px 6px rgba(60,35,15,0.18);
-  transition: top 0.52s cubic-bezier(0.22,1,0.36,1), background 0.2s, transform 0.2s;
-  cursor: grab;
-  z-index: 2;
-}
-.nav-slider-thumb:active,
-.nav-slider-thumb.dragging {
-  cursor: grabbing;
-  transform: translateX(-50%) scale(1.3);
-  background: rgba(100,80,60,0.9);
-}
-
-/* Section labels to the left of the slider */
-.nav-slider-labels {
-  position: absolute;
-  right: 20px;
-  top: 0; bottom: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-end;
-}
-
-.nav-slider-label {
-  font-family: var(--font-serif);
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  color: rgba(100,80,60,0.28);
-  transition: color 0.25s, opacity 0.25s;
-  cursor: pointer;
-  white-space: nowrap;
-}
-.nav-slider-label:hover {
-  color: rgba(100,80,60,0.55);
-}
-.nav-slider-label.active {
-  color: rgba(100,80,60,0.75);
-}
-
-/* Hide native scrollbar inside folders */
-.f-scroll {
-  scrollbar-width: none;
-}
-.f-scroll::-webkit-scrollbar {
-  display: none;
-}
-
-@media (max-width: 680px) {
-  .nav-slider { left: 10px; }
-  .nav-slider-labels { display: none; }
-  .nav-slider-track { height: 130px; }
+  overflow: visible;
+  height: auto;
 }
