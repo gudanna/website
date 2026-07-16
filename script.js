@@ -28,7 +28,7 @@ document.querySelectorAll('.reveal').forEach((element) => observer.observe(eleme
 
 
 const cursorGlow = document.querySelector('.cursor-glow');
-if (cursorGlow && window.matchMedia('(pointer: fine)').matches) {
+if (cursorGlow && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
   window.addEventListener('pointermove', (event) => {
     cursorGlow.style.left = `${event.clientX}px`;
     cursorGlow.style.top = `${event.clientY}px`;
