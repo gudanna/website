@@ -1,4 +1,4 @@
-[README.md](https://github.com/user-attachments/files/30065019/README.md)
+[README.md](https://github.com/user-attachments/files/30102259/README.md)
 # Anna Gudkova — portfolio website
 
 A responsive one-page portfolio for a digital marketing specialist.
@@ -21,6 +21,3 @@ A responsive one-page portfolio for a digital marketing specialist.
 - Confirm the LinkedIn URL in `index.html`.
 - Add links to real campaign examples or published articles when available.
 - Replace the CV file whenever the resume is updated.
-
-
-Important: upload `profile-photo.jpg` to the repository root together with `index.html`, `style.css`, and `script.js`. The portrait will not display if this file is missing or renamed.
