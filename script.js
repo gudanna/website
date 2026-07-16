@@ -25,3 +25,12 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.12 });
 
 document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
+
+
+const cursorGlow = document.querySelector('.cursor-glow');
+if (cursorGlow && window.matchMedia('(pointer: fine)').matches) {
+  window.addEventListener('pointermove', (event) => {
+    cursorGlow.style.left = `${event.clientX}px`;
+    cursorGlow.style.top = `${event.clientY}px`;
+  }, { passive: true });
+}
