@@ -2,8 +2,8 @@ const menuButton = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.nav-links');
 
 menuButton?.addEventListener('click', () => {
-  const open = nav.classList.toggle('open');
-  menuButton.setAttribute('aria-expanded', String(open));
+  const open = nav?.classList.toggle('open');
+  menuButton.setAttribute('aria-expanded', String(Boolean(open)));
 });
 
 nav?.querySelectorAll('a').forEach((link) => {
@@ -13,18 +13,26 @@ nav?.querySelectorAll('a').forEach((link) => {
   });
 });
 
-document.getElementById('year').textContent = new Date().getFullYear();
+const year = document.getElementById('year');
+if (year) year.textContent = new Date().getFullYear();
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.12 });
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const observer = !reduceMotion && 'IntersectionObserver' in window
+  ? new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 })
+  : null;
 
 document.querySelectorAll('.reveal').forEach((element, index) => {
+  if (!observer) {
+    element.classList.add('visible');
+    return;
+  }
   element.style.transitionDelay = `${Math.min(index * 55, 330)}ms`;
   observer.observe(element);
 });
@@ -47,28 +55,25 @@ function animateGlow() {
   if (glow) glow.style.transform = `translate(${currentX - 210}px, ${currentY - 210}px)`;
   requestAnimationFrame(animateGlow);
 }
-animateGlow();
+if (!reduceMotion) animateGlow();
 
-// English / Russian switcher.
-const languageButtons = document.querySelectorAll('.lang-btn');
-const translatable = document.querySelectorAll('[data-en][data-ru]');
-
-function setLanguage(language) {
-  const lang = language === 'ru' ? 'ru' : 'en';
-  document.documentElement.lang = lang;
-  translatable.forEach((element) => {
-    element.textContent = element.dataset[lang];
+// Subtle 3D tilt for the portrait and marketing objects.
+const heroVisual = document.getElementById('hero-visual');
+const stage = heroVisual?.querySelector('.portrait-stage');
+if (heroVisual && stage && !reduceMotion && window.matchMedia('(pointer:fine)').matches) {
+  heroVisual.addEventListener('pointermove', (event) => {
+    const rect = heroVisual.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+    stage.style.setProperty('--rotate-y', `${x * 9}deg`);
+    stage.style.setProperty('--rotate-x', `${y * -7}deg`);
+    stage.style.setProperty('--shift-x', `${x * 10}px`);
+    stage.style.setProperty('--shift-y', `${y * 8}px`);
   });
-  languageButtons.forEach((button) => {
-    const active = button.dataset.lang === lang;
-    button.classList.toggle('active', active);
-    button.setAttribute('aria-pressed', String(active));
+  heroVisual.addEventListener('pointerleave', () => {
+    stage.style.setProperty('--rotate-y', '0deg');
+    stage.style.setProperty('--rotate-x', '0deg');
+    stage.style.setProperty('--shift-x', '0px');
+    stage.style.setProperty('--shift-y', '0px');
   });
-  localStorage.setItem('site-language', lang);
 }
-
-languageButtons.forEach((button) => {
-  button.addEventListener('click', () => setLanguage(button.dataset.lang));
-});
-
-setLanguage(localStorage.getItem('site-language') || 'en');
