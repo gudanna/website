@@ -16,20 +16,6 @@ nav?.querySelectorAll('a').forEach((link) => {
 const year = document.getElementById('year');
 if (year) year.textContent = new Date().getFullYear();
 
-// Experience accordion: toggle role details open/closed.
-document.querySelectorAll('.role-toggle').forEach((button) => {
-  button.addEventListener('click', () => {
-    const role = button.closest('.role');
-    if (!role) return;
-    const open = role.classList.toggle('open');
-    button.setAttribute('aria-expanded', String(open));
-    const label = button.querySelector('.role-toggle-label');
-    if (label) {
-      label.textContent = open ? button.dataset.labelHide : button.dataset.labelShow;
-    }
-  });
-});
-
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const observer = !reduceMotion && 'IntersectionObserver' in window
   ? new IntersectionObserver((entries) => {
@@ -49,30 +35,6 @@ document.querySelectorAll('.reveal').forEach((element, index) => {
   }
   element.style.transitionDelay = `${Math.min(index * 55, 330)}ms`;
   observer.observe(element);
-});
-
-// Fill each hard-skill level bar once it scrolls into view.
-const skillBarObserver = !reduceMotion && 'IntersectionObserver' in window
-  ? new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const level = entry.target.dataset.level || '0';
-          entry.target.style.setProperty('--fill', `${level}%`);
-          entry.target.classList.add('filled');
-          skillBarObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.4 })
-  : null;
-
-document.querySelectorAll('.skill-bar').forEach((bar, index) => {
-  if (!skillBarObserver) {
-    bar.style.setProperty('--fill', `${bar.dataset.level || 0}%`);
-    bar.classList.add('filled');
-    return;
-  }
-  bar.querySelector('.skill-bar-fill').style.transitionDelay = `${Math.min(index * 90, 450)}ms`;
-  skillBarObserver.observe(bar);
 });
 
 // Cursor glow follows the pointer smoothly.
