@@ -710,3 +710,120 @@ body {
 @media (max-width: 640px) {
   .education-item { grid-template-columns: 1fr; gap: 1.3rem; }
 }
+
+/* === Final layout cleanup requested on 2026-07-27 === */
+.section-heading > h2:only-child {
+  grid-column: 1 / -1;
+}
+
+#experience .section-heading,
+#work .section-heading,
+#education .section-heading,
+#skills .skills-intro {
+  margin-bottom: 2.4rem;
+}
+
+.timeline .role:last-child {
+  border-bottom: 0;
+}
+
+.education-section {
+  border-top: 0;
+  padding-top: 4.8rem;
+}
+
+.education-heading {
+  margin-bottom: 2.2rem;
+}
+
+.education-list {
+  border-top: 1px solid var(--line);
+  border-bottom: 0;
+}
+
+.education-item {
+  display: grid;
+  grid-template-columns: .33fr 1fr;
+  gap: 4rem;
+  padding: 2.4rem 0 0;
+  border-bottom: 0;
+}
+
+.education-meta p {
+  font-weight: 800;
+  margin-bottom: .25rem;
+}
+
+.education-meta span {
+  color: var(--muted);
+  font-size: .86rem;
+}
+
+.education-body h3 {
+  font: 500 2rem/1.2 Georgia, serif;
+  margin-bottom: .5rem;
+}
+
+.education-body p {
+  color: var(--muted);
+  margin: 0;
+}
+
+.skills-intro {
+  max-width: none;
+}
+
+.skills-two-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4rem;
+  border-top: 1px solid var(--line);
+}
+
+.skills-column-clean {
+  padding-top: 2rem;
+}
+
+.skills-column-clean h3 {
+  font: 500 2rem/1.15 Georgia, serif;
+  margin-bottom: 1.25rem;
+}
+
+.skills-text-list {
+  display: grid;
+  gap: 0;
+}
+
+.skill-row {
+  padding: 1rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.skill-row:first-child {
+  border-top: 0;
+}
+
+.skill-row strong {
+  display: block;
+  margin-bottom: .25rem;
+}
+
+.skill-row p {
+  margin: 0;
+  color: var(--muted);
+  font-size: .92rem;
+}
+
+@media (max-width: 760px) {
+  .skills-two-columns {
+    grid-template-columns: 1fr;
+    gap: 2.2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .education-item {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+}
