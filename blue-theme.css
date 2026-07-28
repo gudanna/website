@@ -829,3 +829,11 @@ body.language-leaving.to-en footer { --swipe-x: 22px; }
   .marketing-float { min-width: 98px; }
   .float-icon, .mini-bars { width: 26px; height: 26px; }
 }
+
+
+/* 2026-07-29: final content cleanup */
+#experience .role:last-child { border-bottom: 0; }
+#work .section-heading,
+#skills .skills-layout { align-items: start; }
+#work .section-heading h2,
+#skills .skills-layout h2 { margin-bottom: 0; }
