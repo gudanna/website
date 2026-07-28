@@ -77,3 +77,18 @@ if (heroVisual && stage && !reduceMotion && window.matchMedia('(pointer:fine)').
     stage.style.setProperty('--shift-y', '0px');
   });
 }
+
+
+// Smooth page-level language swipe between the separate EN and RU pages.
+document.body.classList.add('language-entering');
+window.setTimeout(() => document.body.classList.remove('language-entering'), 420);
+document.querySelectorAll('.lang-btn').forEach((link) => {
+  link.addEventListener('click', (event) => {
+    const target = link.getAttribute('href');
+    if (!target || link.classList.contains('active') || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    const toRu = link.getAttribute('lang') === 'ru';
+    document.body.classList.add('language-leaving', toRu ? 'to-ru' : 'to-en');
+    window.setTimeout(() => { window.location.href = target; }, 230);
+  });
+});
