@@ -837,3 +837,6 @@ body.language-leaving.to-en footer { --swipe-x: 22px; }
 #skills .skills-layout { align-items: start; }
 #work .section-heading h2,
 #skills .skills-layout h2 { margin-bottom: 0; }
+
+/* Single-column section headings after removing supporting copy */
+.section-heading-single { grid-template-columns: 1fr; }
